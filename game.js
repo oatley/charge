@@ -39,7 +39,8 @@ function preload () {
     this.load.spritesheet('bboy_walk_left', 'assets/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_idle_right', 'assets/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_idle_left', 'assets/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
-
+    this.load.spritesheet('bboy_jump_right', 'assets/bboy_jumpR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_jump_left', 'assets/bboy_jumpL.png', { frameWidth: 64, frameHeight: 64 });
 
     // Tutorial assets
     this.load.image('sky', 'assets/sky.png');
@@ -189,11 +190,19 @@ function update () {
 
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
-        player.anims.play('left', true);
+        if (cursors.up.isDown) {
+            player.anims.play('left_jump', true);
+        } else {
+            player.anims.play('left', true);
+        }
         playerDirection = 'left';
     } else if (cursors.right.isDown) {
         player.setVelocityX(160);
-        player.anims.play('right', true);
+        if (cursors.up.isDown) {
+            player.anims.play('right_jump', true);
+        } else {
+            player.anims.play('right', true);
+        }
         playerDirection = 'right';
     } else {
         player.setVelocityX(0);
