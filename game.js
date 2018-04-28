@@ -38,19 +38,19 @@ function preload () {
     );*/
     //this.load.image('bboy_jump_right', 'assets/bboy_jumpR.png');
     //this.load.image('bboy_jump_left', 'assets/bboy_jumpL.png');
-    this.load.spritesheet('bboy_walk_right', 'assets/bboy_walkR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_walk_left', 'assets/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_idle_right', 'assets/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_idle_left', 'assets/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_jump_right', 'assets/bboy_jumpR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_jump_left', 'assets/bboy_jumpL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_fall_right', 'assets/bboy_fallR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_fall_left', 'assets/bboy_fallL.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_walk_right', 'assets/sprites/characters/bboy_walkR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_walk_left', 'assets/sprites/characters/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_idle_right', 'assets/sprites/characters/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_idle_left', 'assets/sprites/characters/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_jump_right', 'assets/sprites/characters/bboy_jumpR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_jump_left', 'assets/sprites/characters/bboy_jumpL.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_fall_right', 'assets/sprites/characters/bboy_fallR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_fall_left', 'assets/sprites/characters/bboy_fallL.png', { frameWidth: 64, frameHeight: 64 });
     // Tutorial assets
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('sky', 'assets/sprites/characters/sky.png');
+    this.load.image('ground', 'assets/sprites/characters/platform.png');
+    this.load.image('star', 'assets/sprites/characters/star.png');
+    this.load.image('bomb', 'assets/sprites/characters/bomb.png');
     /*this.load.spritesheet('dude',
         'tutorial/assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
