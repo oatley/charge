@@ -226,9 +226,9 @@ function update () {
             player.anims.play('right_fall', true);
         } else if (playerDirection == 'left' && player.body.velocity.y > 0) {
             player.anims.play('right_fall', true);
-        } else if (playerDirection == 'right' && player.body.velocity.y < -2.5) {
+        } else if (playerDirection == 'right' && player.body.velocity.y < -3) {
             player.anims.play('right_jump', true);
-        } else if (playerDirection == 'left' && player.body.velocity.y < -2.5) {
+        } else if (playerDirection == 'left' && player.body.velocity.y < -3) {
             player.anims.play('right_jump', true);
         } else {
             if (playerDirection == 'right') {
