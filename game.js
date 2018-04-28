@@ -1,4 +1,3 @@
-
 var config = {
     type: Phaser.AUTO,
     width: 800,
@@ -25,6 +24,8 @@ var scoreText;
 var bomb;
 var playerDirection = 'right';
 var playerJumpForce = -600;
+
+var allPlayers = [];
 
 
 function preload () {
@@ -69,13 +70,23 @@ function create () {
     platforms.create(50, 250, 'ground');
     platforms.create(750, 240, 'ground');
 
-    // Player
-    player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
+    /*for (var i = 1; i <= 5; i++) {
+        // Player
+        player = this.physics.add.sprite(100*i, 450, 'bboy_pos_default');
+        player.setBounce(0.2);
+        player.setCollideWorldBounds(true);
+        console.log(player);
+        player.body.height = 60;
+        player.body.width = 40;
+        allPlayers.push(player);
+    }*/
+    player = this.physics.add.sprite(100*i, 450, 'bboy_pos_default');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     console.log(player);
     player.body.height = 60;
     player.body.width = 40;
+
     //console.log('local player bounds', player.getBounds());
     //player.Physics.Body.width = 32;
     //console.log('local player bounds', player.getBounds());
@@ -168,24 +179,6 @@ function collectStar (player, star)
 
     score += 10;
     scoreText.setText('Score: ' + score);
-
-    if (stars.countActive(true) === 0)
-    {
-        stars.children.iterate(function (child) {
-
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var bomb = bombs.create(x, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
-
-    }
 }
 
 // Function to run on bomb player collision
