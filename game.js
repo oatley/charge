@@ -66,10 +66,15 @@ function create () {
     platforms.create(750, 220, 'ground');
 
     // Player
-    player = this.physics.add.sprite(50, 450, 'bboy_pos_default');
+    player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
     player.setBounce(0.15);
     player.setCollideWorldBounds(true);
-
+    console.log(player);
+    player.body.height = 60;
+    player.body.width = 40;
+    //console.log('local player bounds', player.getBounds());
+    //player.Physics.Body.width = 32;
+    //console.log('local player bounds', player.getBounds());
     // Bombs
     bombs = this.physics.add.group();
 
@@ -100,6 +105,18 @@ function create () {
     this.anims.create({
         key: 'right_idle',
         frames: this.anims.generateFrameNumbers('bboy_idle_right', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'left_jump',
+        frames: this.anims.generateFrameNumbers('bboy_jump_left', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'right_jump',
+        frames: this.anims.generateFrameNumbers('bboy_jump_right', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
     });
