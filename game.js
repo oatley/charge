@@ -80,7 +80,7 @@ function create () {
         player.body.width = 40;
         allPlayers.push(player);
     }*/
-    player = this.physics.add.sprite(100*i, 450, 'bboy_pos_default');
+    player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     console.log(player);
