@@ -63,7 +63,7 @@ function create () {
     platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
-    platforms.create(740, 220, 'ground');
+    platforms.create(700, 220, 'ground');
 
     // Player
     player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
