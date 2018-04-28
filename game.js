@@ -23,20 +23,28 @@ var player;
 var score = 0;
 var scoreText;
 var bomb;
+var playerDirection = 'right';
 
 
 function preload () {
     // Charge assets
     this.load.image('bboy_pos_default', 'assets/bboy_default.png');
     this.load.image('bboy_neg_default', 'assets/bboy_neg_default.png');
-    this.load.spritesheet('bboy_walk', 'assets/bboy_walk.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_walk',
+        'assets/bboy_walk.png',
+        { frameWidth: 64, frameHeight: 64 }
+    );
+    this.load.spritesheet('bboy_walk_right', 'assets/bboy_walkR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_walk_left', 'assets/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_idle_right', 'assets/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_idle_left', 'assets/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
 
 
     // Tutorial assets
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('ground', 'assets/platform.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('sky', 'tutorial/assets/sky.png');
+    this.load.image('ground', 'tutorial/assets/platform.png');
+    this.load.image('star', 'tutorial/assets/star.png');
+    this.load.image('bomb', 'tutorial/assets/bomb.png');
     /*this.load.spritesheet('dude',
         'tutorial/assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
@@ -67,7 +75,7 @@ function create () {
     // Animations
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('bboy_walk', { start: 0, end: 4 }),
+        frames: this.anims.generateFrameNumbers('bboy_walk_left', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
     });
@@ -78,10 +86,23 @@ function create () {
     });
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('bboy_walk', { start: 0, end: 4 }),
+        frames: this.anims.generateFrameNumbers('bboy_walk_right', { start: 0, end: 6 }),
         frameRate: 10,
         repeat: -1
     });
+    this.anims.create({
+        key: 'left_idle',
+        frames: this.anims.generateFrameNumbers('bboy_idle_left', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
+    this.anims.create({
+        key: 'right_idle',
+        frames: this.anims.generateFrameNumbers('bboy_idle_right', { start: 0, end: 6 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
 
     // Star objects
     stars = this.physics.add.group({
@@ -118,12 +139,16 @@ function collectStar (player, star)
     score += 10;
     scoreText.setText('Score: ' + score);
 
-    if (stars.countActive(true) === 0) {
+    if (stars.countActive(true) === 0)
+    {
         stars.children.iterate(function (child) {
+
             child.enableBody(true, child.x, 0, true, true);
+
         });
 
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
         var bomb = bombs.create(x, 16, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
@@ -147,14 +172,18 @@ function update () {
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
         player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown) {
+        playerDirection = 'left';
+    } else if (cursors.right.isDown) {
         player.setVelocityX(160);
         player.anims.play('right', true);
-    }
-    else {
+        playerDirection = 'right';
+    } else {
         player.setVelocityX(0);
-        player.anims.play('turn');
+        if (playerDirection == 'right') {
+            player.anims.play('right_idle', true);
+        } else {
+            player.anims.play('left_idle', true);
+        }
     }
 
     if (cursors.up.isDown && player.body.touching.down) {
