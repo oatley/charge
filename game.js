@@ -24,6 +24,7 @@ var score = 0;
 var scoreText;
 var bomb;
 var playerDirection = 'right';
+var playerJumpForce = -600;
 
 
 function preload () {
@@ -187,6 +188,6 @@ function update () {
     }
 
     if (cursors.up.isDown && player.body.touching.down) {
-        player.setVelocityY(-660);
+        player.setVelocityY(playerJumpForce);
     }
 }
