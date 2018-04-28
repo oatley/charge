@@ -29,19 +29,22 @@ var playerJumpForce = -600;
 
 function preload () {
     // Charge assets
-    this.load.image('bboy_pos_default', 'assets/bboy_default.png');
+    /*this.load.image('bboy_pos_default', 'assets/bboy_default.png');
     this.load.image('bboy_neg_default', 'assets/bboy_neg_default.png');
-    this.load.spritesheet('bboy_walk',
+    /this.load.spritesheet('bboy_walk',
         'assets/bboy_walk.png',
         { frameWidth: 64, frameHeight: 64 }
-    );
+    );*/
+    //this.load.image('bboy_jump_right', 'assets/bboy_jumpR.png');
+    //this.load.image('bboy_jump_left', 'assets/bboy_jumpL.png');
     this.load.spritesheet('bboy_walk_right', 'assets/bboy_walkR.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_walk_left', 'assets/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_idle_right', 'assets/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_idle_left', 'assets/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_jump_right', 'assets/bboy_jumpR.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('bboy_jump_left', 'assets/bboy_jumpL.png', { frameWidth: 64, frameHeight: 64 });
-
+    this.load.spritesheet('bboy_fall_right', 'assets/bboy_fallR.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('bboy_fall_left', 'assets/bboy_fallL.png', { frameWidth: 64, frameHeight: 64 });
     // Tutorial assets
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
@@ -64,11 +67,11 @@ function create () {
     platforms.create(400, 568, 'ground').setScale(2).refreshBody();
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
-    platforms.create(700, 220, 'ground');
+    platforms.create(750, 240, 'ground');
 
     // Player
     player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
-    player.setBounce(0.15);
+    player.setBounce(0.2);
     player.setCollideWorldBounds(true);
     console.log(player);
     player.body.height = 60;
@@ -111,15 +114,23 @@ function create () {
     });
     this.anims.create({
         key: 'left_jump',
-        frames: this.anims.generateFrameNumbers('bboy_jump_left', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
+        frames: [ { key: 'bboy_jump_left', frame: 0 } ],
+        frameRate: 20,
     });
     this.anims.create({
         key: 'right_jump',
-        frames: this.anims.generateFrameNumbers('bboy_jump_right', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
+        frames: [ { key: 'bboy_jump_right', frame: 0 } ],
+        frameRate: 20,
+    });
+    this.anims.create({
+        key: 'left_fall',
+        frames: [ { key: 'bboy_fall_left', frame: 0 } ],
+        frameRate: 20,
+    });
+    this.anims.create({
+        key: 'right_fall',
+        frames: [ { key: 'bboy_fall_right', frame: 0 } ],
+        frameRate: 20,
     });
 
 
@@ -190,7 +201,9 @@ function update () {
 
     if (cursors.left.isDown) {
         player.setVelocityX(-160);
-        if (cursors.up.isDown) {
+        if (player.body.velocity.y > 0) {
+            player.anims.play('left_fall', true);
+        } else if (cursors.up.isDown) {
             player.anims.play('left_jump', true);
         } else {
             player.anims.play('left', true);
@@ -198,7 +211,9 @@ function update () {
         playerDirection = 'left';
     } else if (cursors.right.isDown) {
         player.setVelocityX(160);
-        if (cursors.up.isDown) {
+        if (player.body.velocity.y > 0) {
+            player.anims.play('right_fall', true);
+        } else if (cursors.up.isDown) {
             player.anims.play('right_jump', true);
         } else {
             player.anims.play('right', true);
@@ -206,10 +221,21 @@ function update () {
         playerDirection = 'right';
     } else {
         player.setVelocityX(0);
-        if (playerDirection == 'right') {
-            player.anims.play('right_idle', true);
+        console.log(player.body.velocity.y);
+        if (playerDirection == 'right' && player.body.velocity.y > 0) {
+            player.anims.play('right_fall', true);
+        } else if (playerDirection == 'left' && player.body.velocity.y > 0) {
+            player.anims.play('right_fall', true);
+        } else if (playerDirection == 'right' && player.body.velocity.y < -2.5) {
+            player.anims.play('right_jump', true);
+        } else if (playerDirection == 'left' && player.body.velocity.y < -2.5) {
+            player.anims.play('right_jump', true);
         } else {
-            player.anims.play('left_idle', true);
+            if (playerDirection == 'right') {
+                player.anims.play('right_idle', true);
+            } else if (playerDirection == 'left') {
+                player.anims.play('left_idle', true);
+            }
         }
     }
 
