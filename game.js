@@ -29,10 +29,7 @@ function preload () {
     // Charge assets
     this.load.image('bboy_pos_default', 'assets/bboy_default.png');
     this.load.image('bboy_neg_default', 'assets/bboy_neg_default.png');
-    this.load.spritesheet('bboy_walk',
-        'assets/bboy_walk.png',
-        { frameWidth: 64, frameHeight: 64 }
-    );
+    this.load.spritesheet('bboy_walk', 'assets/bboy_walk.png', { frameWidth: 64, frameHeight: 64 });
 
 
     // Tutorial assets
