@@ -66,7 +66,7 @@ function create () {
     platforms.create(750, 220, 'ground');
 
     // Player
-    player = this.physics.add.sprite(100, 450, 'bboy_pos_default');
+    player = this.physics.add.sprite(50, 450, 'bboy_pos_default');
     player.setBounce(0.15);
     player.setCollideWorldBounds(true);
 
