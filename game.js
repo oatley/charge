@@ -25,7 +25,7 @@ var score = 0;
 var scoreText;
 //var bomb;
 var playerDirection = 'right';
-var playerJumpForce = -600;
+var playerJumpForce = -630;
 
 var allPlayers = [];
 
