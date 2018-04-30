@@ -96,8 +96,18 @@ function update() {
     {
         //  Move to the right
         player.body.velocity.x = 150;
-        player.animations.play('walk_right');
         playerDirection = 'right';
+        if (!player.body.touching.down) {
+            if (player.body.velocity.y < -3) {
+                player.animations.play('jump_right');
+            } else {
+                player.animations.play('fall_right');    
+            }
+
+        } else {
+            player.animations.play('walk_right');
+
+        }
     }
     else
     {
