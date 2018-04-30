@@ -19,7 +19,7 @@ var playerJumpSpeed = -600; // Negative number
 var playerJumping = false;
 
 // tilemap
-var level1;
+var map;
 var groundlayer;
 var bglayer;
 var wallslayer;
@@ -31,10 +31,12 @@ function create() {
     game.add.sprite(0, 0, 'sky');
 
     // other objects, etc
-   level1 = game.add.tilemap('map'); // step 1
-   level1.addTilesetImage('ChargeTiles', 'ChargeTiles'); // step 2
+   map = game.add.tilemap('map'); // step 1
+   map.addTilesetImage('ChargeTiles', 'ChargeTiles'); // step 2
 
-   groundlayer = level1.createLayer('Ground');
+   groundlayer = map.createLayer('Ground');
+
+   map.setCollision([2,3,4,5,6,7,8,10,11,12,13,14,15], true, groundlayer);
    // step 3
    //this.bgLayer = this.level1.createLayer('Background');
    //this.wallsLayer = this.level1.createLayer('Walls');
@@ -109,7 +111,7 @@ function update() {
     player.body.velocity.x = 0;
     //console.log(player.body.velocity.y);
 
-    console.log(player.body.touching.down, player.body.blocked.down);
+    //console.log(player.body.touching.down, player.body.blocked.down);
 
     if (cursors.left.isDown) {
         //  Move to the right
