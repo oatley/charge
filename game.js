@@ -32,7 +32,7 @@ function create() {
 
     // other objects, etc
    level1 = game.add.tilemap('map'); // step 1
-   level1.addTilesetImage('tiles', 'assets/sprites/tiles/ChargeTiles.png'); // step 2
+   level1.addTilesetImage('ChargeTiles', 'ChargeTiles'); // step 2
 
    bgLayer = level1.createLayer('Ground');
    // step 3
