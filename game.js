@@ -5,9 +5,11 @@ function preload() {
     game.load.image('ground', 'assets/sprites/characters/platform.png');
     game.load.image('star', 'assets/sprites/characters/star.png');
     game.load.spritesheet('battery', 'assets/sprites/characters/battery-spritesheet.png', 64, 64);
-    //game.load.spritesheet('bboy_walkL', 'assets/sprites/characters/bboy_walkL.png', 64, 64);
-    //game.load.spritesheet('bboy_idleL', 'assets/sprites/characters/bboy_idleL.png', 64, 64);
-    //console.log(game.load.spritesheet);
+
+    game.load.image('ChargeTiles', 'assets/sprites/tiles/ChargeTiles.png');
+    game.load.tilemap('map', 'assets/tilemaps/maps/ChargeTilesMap.json', null, Phaser.Tilemap.TILED_JSON);
+
+
 }
 
 var playerDirection = 'left';
@@ -16,10 +18,26 @@ var playerMoveSpeed = 250;
 var playerJumpSpeed = -600; // Negative number
 var playerJumping = false;
 
+// tilemap
+var level1;
+var groundlayer;
+var bglayer;
+var wallslayer;
+
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
+
+
+    // other objects, etc
+   level1 = game.add.tilemap('map'); // step 1
+   level1.addTilesetImage('tiles', 'ChargeTiles'); // step 2
+
+   bgLayer = level1.createLayer('Ground');
+   // step 3
+   //this.bgLayer = this.level1.createLayer('Background');
+   //this.wallsLayer = this.level1.createLayer('Walls');
 
     //  A simple background for our game
     game.add.sprite(0, 0, 'sky');
@@ -31,22 +49,22 @@ function create() {
     platforms.enableBody = true;
 
     // Here we create the ground.
-    var ground = platforms.create(0, game.world.height - 64, 'ground');
+    //var ground = platforms.create(0, game.world.height - 64, 'ground');
 
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    ground.scale.setTo(2, 2);
+    //ground.scale.setTo(2, 2);
 
     //  This stops it from falling away when you jump on it
-    ground.body.immovable = true;
+    //ground.body.immovable = true;
 
     //  Now let's create two ledges
-    var ledge = platforms.create(400, 400, 'ground');
+    //var ledge = platforms.create(400, 400, 'ground');
 
-    ledge.body.immovable = true;
+    //ledge.body.immovable = true;
 
-    ledge = platforms.create(-150, 250, 'ground');
+    //ledge = platforms.create(-150, 250, 'ground');
 
-    ledge.body.immovable = true;
+    //ledge.body.immovable = true;
 
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'battery');
