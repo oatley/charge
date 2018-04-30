@@ -14,7 +14,7 @@ var playerDirection = 'left';
 var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
 var playerJumpSpeed = -100; // Negative number
-var playerJumpSpeedMod = -100;
+var playerJumpSpeedMod = -300;
 var playerJumping = false;
 var playerJumpMaxHeight = -400;
 
@@ -142,16 +142,9 @@ function update() {
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && playerJumping && player.body.velocity.y > playerJumpMaxHeight) {
-        player.body.velocity.y = playerJumpSpeedMod;
-        if (player.body.velocity.y < playerJumpMaxHeight) {
-            playerJumping = false;
-        }
-    } else if (!cursors.up.isDown && playerJumping) {
+    if (!cursors.up.isDown) {
         player.body.velocity.y = 0;
-        playerJumping = false;
     } else if (cursors.up.isDown && player.body.touching.down) {
         player.body.velocity.y = playerJumpSpeed;
-        playerJumping = true;
     }
 }
