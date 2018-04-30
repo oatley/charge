@@ -143,7 +143,7 @@ function update() {
 
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && playerJumping && player.body.velocity.y > playerJumpMaxHeight) {
-        player.body.velocity.y += playerJumpSpeed;
+        player.body.velocity.y += playerJumpSpeedMod;
         if (player.body.velocity.y < playerJumpMaxHeight) {
             playerJumping = false;
         }
