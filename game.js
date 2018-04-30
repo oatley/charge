@@ -14,7 +14,7 @@ var playerDirection = 'left';
 var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
 var playerJumpSpeed = -100; // Negative number
-var playerJumpSpeedMod = -50;
+var playerJumpSpeedMod = -25;
 var playerJumping = false;
 var playerJumpMaxHeight = -500;
 
