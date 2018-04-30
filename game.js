@@ -28,6 +28,8 @@ var groundlayer;
 var bglayer;
 var wallslayer;
 
+var players = {};
+
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
@@ -103,6 +105,7 @@ function create() {
         player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
 
         playerPositiveGroup.add(player);
+        players.push(player);
     }
 
     //console.log(player.animations);
@@ -118,11 +121,11 @@ function update() {
     //var hitPlatform = game.physics.arcade.collide(player, platforms);
     var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
 
+
+    for (var player in players) {
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
     //console.log(player.body.velocity.y);
-
-    playerPositiveGroup.callAll('animations.play', 'animations', 'idle_left');
 
     //console.log(player.body.touching.down, player.body.blocked.down);
 
@@ -132,15 +135,12 @@ function update() {
         playerDirection = 'left';
         if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
-                //player.animations.play('jump_left');
-                playerPositiveGroup.callAll('animations.play', 'animations', 'jump_left');
+                player.animations.play('jump_left');
             } else {
-                //player.animations.play('fall_left');
-                playerPositiveGroup.callAll('animations.play', 'animations', 'fall_left');
+                player.animations.play('fall_left');
             }
         } else {
-            //player.animations.play('walk_left');
-            playerPositiveGroup.callAll('animations.play', 'animations', 'walk_left');
+            player.animations.play('walk_left');
         }
     }
     else if (cursors.right.isDown) {
@@ -186,4 +186,5 @@ function update() {
         player.body.velocity.y = playerJumpSpeed;
         playerJumping = true;
     }
+}
 }
