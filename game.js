@@ -109,6 +109,8 @@ function update() {
     player.body.velocity.x = 0;
     //console.log(player.body.velocity.y);
 
+    console.log(player.body.touching.down, player.body.blocked.down);
+
     if (cursors.left.isDown) {
         //  Move to the right
         player.body.velocity.x = -playerMoveSpeed;
@@ -138,8 +140,7 @@ function update() {
             player.animations.play('walk_right');
         }
     }
-    else
-    {
+    else {
         if (playerDirection == 'left') {
             if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_left');
