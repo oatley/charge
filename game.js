@@ -147,7 +147,7 @@ function update() {
         if (player.body.velocity.y < playerJumpMaxHeight) {
             playerJumping = false;
         }
-    } else if (!cursors.up.isDown) {
+    } else if (!cursors.up.isDown && playerJumping) {
         player.body.velocity.y = 0;
         playerJumping = false;
     } else if (cursors.up.isDown && player.body.touching.down) {
