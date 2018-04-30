@@ -34,7 +34,7 @@ function create() {
    level1 = game.add.tilemap('map'); // step 1
    level1.addTilesetImage('ChargeTiles', 'ChargeTiles'); // step 2
 
-   bgLayer = level1.createLayer('Ground');
+   groundlayer = level1.createLayer('Ground');
    // step 3
    //this.bgLayer = this.level1.createLayer('Background');
    //this.wallsLayer = this.level1.createLayer('Walls');
@@ -103,6 +103,7 @@ function update() {
 
     //  Collide the player and the stars with the platforms
     var hitPlatform = game.physics.arcade.collide(player, platforms);
+    var hitChargeTiles = game.physics.arcade.collide(player, groundlayer);
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
