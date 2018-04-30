@@ -85,12 +85,11 @@ function update() {
     player.body.velocity.x = 0;
 
 
-    if (cursors.left.isDown)
-    {
+    if (cursors.left.isDown) {
         //  Move to the right
         player.body.velocity.x = -150;
         playerDirection = 'left';
-        if (!player.body.touching.down) {
+        if (player.body.velocity.y < -3 || !player.body.touching.down) {
             if (player.body.velocity.y < -3) {
                 player.animations.play('jump_left');
             } else {
@@ -100,12 +99,11 @@ function update() {
             player.animations.play('walk_left');
         }
     }
-    else if (cursors.right.isDown)
-    {
+    else if (cursors.right.isDown) {
         //  Move to the right
         player.body.velocity.x = 150;
         playerDirection = 'right';
-        if (!player.body.touching.down) {
+        if (player.body.velocity.y < -3 || !player.body.touching.down) {
             if (player.body.velocity.y < -3) {
                 player.animations.play('jump_right');
             } else {
@@ -114,20 +112,19 @@ function update() {
 
         } else {
             player.animations.play('walk_right');
-
         }
     }
     else
     {
         if (playerDirection == 'left') {
-            if (!player.body.touching.down && player.body.velocity.y < -3) {
-                player.animations.play('jump_right');
+            if (player.body.velocity.y < -3 || !player.body.touching.down) {
+                player.animations.play('fall_left');
             } else {
                 player.animations.play('idle_left');
             }
-        } else if (!player.body.touching.down && playerDirection == 'right') {
-            if (player.body.velocity.y < -3) {
-                player.animations.play('jump_right');
+        } else if (playerDirection == 'right') {
+            if (player.body.velocity.y < -3 || !player.body.touching.down) {
+                player.animations.play('fall_right');
             } else {
                 player.animations.play('idle_right');
             }
