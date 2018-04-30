@@ -142,9 +142,9 @@ function update() {
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (cursors.up.isDown && playerJumping && player.body.velocity.y > -200) {
+    if (cursors.up.isDown && playerJumping && player.body.velocity.y > playerJumpMaxHeight) {
         player.body.velocity.y += playerJumpSpeed;
-        if (player.body.velocity.y < -200) {
+        if (player.body.velocity.y < playerJumpMaxHeight) {
             playerJumping = false;
         }
     } else if (!cursors.up.isDown) {
