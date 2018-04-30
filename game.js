@@ -14,9 +14,9 @@ var playerDirection = 'left';
 var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
 var playerJumpSpeed = -100; // Negative number
-var playerJumpSpeedMod = -25;
+var playerJumpSpeedMod = -100;
 var playerJumping = false;
-var playerJumpMaxHeight = -500;
+var playerJumpMaxHeight = -400;
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
@@ -143,7 +143,7 @@ function update() {
 
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && playerJumping && player.body.velocity.y > playerJumpMaxHeight) {
-        player.body.velocity.y += playerJumpSpeedMod;
+        player.body.velocity.y = playerJumpSpeedMod;
         if (player.body.velocity.y < playerJumpMaxHeight) {
             playerJumping = false;
         }
