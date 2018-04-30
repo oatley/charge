@@ -132,12 +132,15 @@ function update() {
         playerDirection = 'left';
         if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
-                player.animations.play('jump_left');
+                //player.animations.play('jump_left');
+                playerPositiveGroup.callAll('animations.play', 'animations', 'jump_left');
             } else {
-                player.animations.play('fall_left');
+                //player.animations.play('fall_left');
+                playerPositiveGroup.callAll('animations.play', 'animations', 'fall_left');
             }
         } else {
-            player.animations.play('walk_left');
+            //player.animations.play('walk_left');
+            playerPositiveGroup.callAll('animations.play', 'animations', 'walk_left');
         }
     }
     else if (cursors.right.isDown) {
