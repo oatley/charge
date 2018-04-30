@@ -101,6 +101,9 @@ function create() {
 
    map.setCollision([2,3,4,5,6,7,8,10,11,12,13,14,15], true, groundlayer);
 
+   configurePositivePlayerControls();
+   configureNegativePlayerControls();
+
     //ledge.body.immovable = true;
     playerPositiveGroup = game.add.group();
     for (var i = 0; i < 3; i++) {
