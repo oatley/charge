@@ -80,6 +80,7 @@ function create() {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     player.body.setSize(32, 60, 16, 0);
+    player.body.checkCollision.up = false;
 
 
     //  Our two animations, walking left and right.
