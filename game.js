@@ -75,38 +75,35 @@ function create() {
     //ledge.body.immovable = true;
     playerPositiveGroup = game.add.group();
 
-    // The player and its settings
-    player = game.add.sprite(32, game.world.height - 150, 'battery');
-    //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
-    //  We need to enable physics on the player
-    game.physics.arcade.enable(player);
+    for (var i = 0; i < 3; i++) {
+        // The player and its settings
+        player = game.add.sprite(32 * (i+5), game.world.height - 150, 'battery');
+        //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
+        //  We need to enable physics on the player
+        game.physics.arcade.enable(player);
+
+        //  Player physics properties. Give the little guy a slight bounce.
+        player.body.bounce.y = 0.2;
+        player.body.gravity.y = 1000;
+        player.body.collideWorldBounds = true;
+        player.body.setSize(32, 60, 16, 0);
+        player.body.checkCollision.up = false;
 
 
+        //  Our two animations, walking left and right.
+        player.animations.add('idle_left', [0, 1, 2, 3, 4, 5, 6], 10, true);
+        player.animations.add('idle_right', [7, 8, 9, 10, 11, 12, 13], 10, true);
+        player.animations.add('fall_left', [14], 10, false);
+        player.animations.add('fall_right', [15], 10, false);
+        player.animations.add('walk_left', [16, 17, 18, 19, 20, 21], 10, true);
+        player.animations.add('walk_right', [22, 23, 24, 25, 26, 27, ], 10, true);
+        player.animations.add('jump_left', [28], 10, false);
+        player.animations.add('jump_right', [29], 10, false);
+        player.animations.add('weld_left', [32, 33, 34, 35, 36, 37, 38, 39, 40], 10, true);
+        player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
 
-
-
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 1000;
-    player.body.collideWorldBounds = true;
-    player.body.setSize(32, 60, 16, 0);
-    player.body.checkCollision.up = false;
-
-
-    //  Our two animations, walking left and right.
-    player.animations.add('idle_left', [0, 1, 2, 3, 4, 5, 6], 10, true);
-    player.animations.add('idle_right', [7, 8, 9, 10, 11, 12, 13], 10, true);
-    player.animations.add('fall_left', [14], 10, false);
-    player.animations.add('fall_right', [15], 10, false);
-    player.animations.add('walk_left', [16, 17, 18, 19, 20, 21], 10, true);
-    player.animations.add('walk_right', [22, 23, 24, 25, 26, 27, ], 10, true);
-    player.animations.add('jump_left', [28], 10, false);
-    player.animations.add('jump_right', [29], 10, false);
-    player.animations.add('weld_left', [32, 33, 34, 35, 36, 37, 38, 39, 40], 10, true);
-    player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
-
-    playerPositiveGroup.add(player);
-
+        playerPositiveGroup.add(player);
+    }
 
     //console.log(player.animations);
 
