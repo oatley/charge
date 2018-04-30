@@ -109,7 +109,7 @@ function create() {
     playerNegativeGroup = game.add.group();
     for (var i = 0; i < 3; i++) {
         // The player and its settings
-        p = game.add.sprite(game.world.width -32 * i, game.world.height - 150, 'battery-neg');
+        p = game.add.sprite(game.world.width -128 * i, game.world.height - 150, 'battery-neg');
         configurePlayer(p, playerNegativeGroup); // Default settings + group
     }
 
