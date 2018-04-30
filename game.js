@@ -5,6 +5,7 @@ function preload() {
     game.load.image('ground', 'assets/sprites/characters/platform.png');
     game.load.image('star', 'assets/sprites/characters/star.png');
     game.load.spritesheet('battery', 'assets/sprites/characters/battery-spritesheet.png', 64, 64);
+    game.load.spritesheet('battery-neg', 'assets/sprites/characters/battery-spritesheet.png', 64, 64);
 
     game.load.image('ChargeTiles', 'assets/sprites/tiles/ChargeTiles.png');
     game.load.tilemap('map', 'assets/tilemaps/maps/ChargeTilesMap.json', null, Phaser.Tilemap.TILED_JSON);
