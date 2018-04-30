@@ -120,9 +120,17 @@ function update() {
     else
     {
         if (playerDirection == 'left') {
-            player.animations.play('idle_left');
+            if (player.body.velocity.y < -3) {
+                player.animations.play('jump_right');
+            } else {
+                player.animations.play('idle_left');
+            }
         } else if (playerDirection == 'right') {
-            player.animations.play('idle_right');
+            if (player.body.velocity.y < -3) {
+                player.animations.play('jump_right');
+            } else {
+                player.animations.play('idle_right');
+            }
         }
     }
 
