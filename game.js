@@ -15,7 +15,7 @@ function preload() {
 var playerDirection = 'left';
 var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
-var playerJumpSpeed = -600; // Negative number
+var playerJumpSpeed = -650; // Negative number
 var playerJumping = false;
 
 // tilemap
