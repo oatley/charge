@@ -122,12 +122,11 @@ function update() {
     var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
 
 
-    console.log
+playerPositiveGroup.forEach(function(player) {
 
-    for (var i in players) {
     //  Reset the players velocity (movement)
-    players[i].body.velocity.x = 0;
-    console.log(player[i]);
+    players.body.velocity.x = 0;
+    //console.log(player.body.velocity.y);
 
     //console.log(player.body.touching.down, player.body.blocked.down);
 
