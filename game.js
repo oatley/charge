@@ -28,7 +28,7 @@ var groundlayer;
 var bglayer;
 var wallslayer;
 
-var players = {};
+var players = [];
 
 
 function create() {
