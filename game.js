@@ -113,7 +113,7 @@ function update() {
         //  Move to the right
         player.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
-        if (player.body.velocity.y < playerJumpSensitivity || !player.body.touching.down) {
+        if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else {
@@ -127,7 +127,7 @@ function update() {
         //  Move to the right
         player.body.velocity.x = playerMoveSpeed;
         playerDirection = 'right';
-        if (player.body.velocity.y < playerJumpSensitivity || !player.body.touching.down) {
+        if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else {
@@ -143,7 +143,7 @@ function update() {
         if (playerDirection == 'left') {
             if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_left');
-            } else if (!player.body.touching.down) {
+            } else if (!(player.body.touching.down || player.body.blocked.down)) {
                 player.animations.play('fall_left');
             } else {
                 player.animations.play('idle_left');
@@ -151,7 +151,7 @@ function update() {
         } else if (playerDirection == 'right') {
             if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_right');
-            } else if (!player.body.touching.down) {
+            } else if (!(player.body.touching.down || player.body.blocked.down)) {
                 player.animations.play('fall_right');
             } else {
                 player.animations.play('idle_right');
@@ -163,7 +163,7 @@ function update() {
     if (!cursors.up.isDown && playerJumping && player.body.velocity.y < 0) {
         player.body.velocity.y = player.body.velocity.y * 0.5;
         playerJumping = false;
-    } else if (cursors.up.isDown && player.body.touching.down) {
+    } else if (cursors.up.isDown && (player.body.touching.down || player.body.blocked.down)) {
         player.body.velocity.y = playerJumpSpeed;
         playerJumping = true;
     }
