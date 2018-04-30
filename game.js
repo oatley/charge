@@ -28,7 +28,7 @@ var wallslayer;
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
+    game.add.sprite(0, 0, 'sky');
 
     // other objects, etc
    level1 = game.add.tilemap('map'); // step 1
@@ -40,7 +40,7 @@ function create() {
    //this.wallsLayer = this.level1.createLayer('Walls');
 
     //  A simple background for our game
-    game.add.sprite(0, 0, 'sky');
+
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     platforms = game.add.group();
