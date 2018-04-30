@@ -31,7 +31,7 @@ var wallslayer;
 var players = [];
 var p;
 
-function createPlayer(player, group) {
+function configurePlayer(player, group) {
     game.physics.arcade.enable(player);
 
     // Custom attributes
