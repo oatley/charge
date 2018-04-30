@@ -54,7 +54,7 @@ function create() {
     player.body.bounce.y = 0.2;
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
-    player.body.setSize(40, 64, 20, 0);
+    player.body.setSize(20, 64, 20, 0);
 
 
     //  Our two animations, walking left and right.
