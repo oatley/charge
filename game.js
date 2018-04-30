@@ -120,12 +120,12 @@ function update() {
     else
     {
         if (playerDirection == 'left') {
-            if (player.body.velocity.y < -3) {
+            if (!player.body.touching.down && player.body.velocity.y < -3) {
                 player.animations.play('jump_right');
             } else {
                 player.animations.play('idle_left');
             }
-        } else if (playerDirection == 'right') {
+        } else if (!player.body.touching.down && playerDirection == 'right') {
             if (player.body.velocity.y < -3) {
                 player.animations.play('jump_right');
             } else {
