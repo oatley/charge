@@ -156,7 +156,7 @@ function runAnim(player, controls) {
             player.animations.play('walk_left');
         }
     }
-    else if (cursors.right.isDown) {
+    else if (rightButton.isDown) {
         //  Move to the right
         player.body.velocity.x = playerMoveSpeed;
         playerDirection = 'right';
@@ -192,10 +192,10 @@ function runAnim(player, controls) {
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (!cursors.up.isDown && playerJumping && player.body.velocity.y < 0) {
+    if (!upButton.isDown && playerJumping && player.body.velocity.y < 0) {
         player.body.velocity.y = player.body.velocity.y * 0.5;
         playerJumping = false;
-    } else if (cursors.up.isDown && (player.body.touching.down || player.body.blocked.down)) {
+    } else if (upButton.isDown && (player.body.touching.down || player.body.blocked.down)) {
         player.body.velocity.y = playerJumpSpeed;
         playerJumping = true;
     }
