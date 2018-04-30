@@ -88,7 +88,7 @@ function update() {
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
-    console.log(player.body.velocity.y);
+    //console.log(player.body.velocity.y);
 
     if (cursors.left.isDown) {
         //  Move to the right
