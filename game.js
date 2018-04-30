@@ -79,7 +79,7 @@ function create() {
 
     for (var i = 0; i < 3; i++) {
         // The player and its settings
-        player = game.add.sprite(32 * (i+5), game.world.height - 150, 'battery');
+        player = game.add.sprite(32 * (i+20), game.world.height - 150, 'battery');
         //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
         //  We need to enable physics on the player
         game.physics.arcade.enable(player);
