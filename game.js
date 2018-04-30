@@ -120,15 +120,7 @@ function create() {
     console.log(player.body);
 }
 
-function update() {
-
-    //  Collide the player and the stars with the platforms
-    //var hitPlatform = game.physics.arcade.collide(player, platforms);
-    var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
-
-
-playerPositiveGroup.forEach(function(player) {
-
+function runAnim(player) {
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
 
@@ -189,5 +181,17 @@ playerPositiveGroup.forEach(function(player) {
         player.body.velocity.y = playerJumpSpeed;
         playerJumping = true;
     }
-}, this);
+}
+
+function update() {
+
+    //  Collide the player and the stars with the platforms
+    //var hitPlatform = game.physics.arcade.collide(player, platforms);
+    var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
+
+
+    playerPositiveGroup.forEach(function(player) {
+        runAnim(player);
+
+    }, this);
 }
