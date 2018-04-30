@@ -122,7 +122,7 @@ function update() {
     player.body.velocity.x = 0;
     //console.log(player.body.velocity.y);
 
-    playerPositiveGroup.callAll('animations', 'play', 'idle_left');
+    playerPositiveGroup.callAll('animations.play', 'animations', 'idle_left');
 
     //console.log(player.body.touching.down, player.body.blocked.down);
 
