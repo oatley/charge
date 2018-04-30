@@ -83,11 +83,11 @@ function update() {
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
-    console.log(player.body.velocity.y);
+    //console.log(player.body.velocity.y);
 
     if (cursors.left.isDown) {
         //  Move to the right
-        player.body.velocity.x = -150;
+        player.body.velocity.x = -250;
         playerDirection = 'left';
         if (player.body.velocity.y < -3 || !player.body.touching.down) {
             if (player.body.velocity.y < -3) {
@@ -101,7 +101,7 @@ function update() {
     }
     else if (cursors.right.isDown) {
         //  Move to the right
-        player.body.velocity.x = 150;
+        player.body.velocity.x = 250;
         playerDirection = 'right';
         if (player.body.velocity.y < -3 || !player.body.touching.down) {
             if (player.body.velocity.y < -3) {
@@ -117,7 +117,7 @@ function update() {
     else
     {
         if (playerDirection == 'left') {
-            if (player.body.velocity.y < -3 || !player.body.touching.down) {
+            if (player.body.velocity.y < -3) {
                 player.animations.play('jump_left');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_left');
@@ -125,7 +125,7 @@ function update() {
                 player.animations.play('idle_left');
             }
         } else if (playerDirection == 'right') {
-            if (player.body.velocity.y < -3 || !player.body.touching.down) {
+            if (player.body.velocity.y < -3) {
                 player.animations.play('jump_right');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_right');
