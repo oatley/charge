@@ -19,6 +19,9 @@ var playerMoveSpeed = 250;
 var playerJumpSpeed = -650; // Negative number
 var playerJumping = false;
 
+var playerNegativeGroup;
+var playerPositiveGroup;
+
 // tilemap
 var map;
 var groundlayer;
@@ -45,11 +48,13 @@ function create() {
     //  A simple background for our game
 
 
+
+
     //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = game.add.group();
+    //platforms = game.add.group();
 
     //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
+    //platforms.enableBody = true;
 
     // Here we create the ground.
     //var ground = platforms.create(0, game.world.height - 64, 'ground');
@@ -68,13 +73,17 @@ function create() {
     //ledge = platforms.create(-150, 250, 'ground');
 
     //ledge.body.immovable = true;
+    playerPositiveGroup = game.add.group();
 
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'battery');
     //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
-
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
+
+
+
+
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.2;
@@ -96,6 +105,9 @@ function create() {
     player.animations.add('weld_left', [32, 33, 34, 35, 36, 37, 38, 39, 40], 10, true);
     player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
 
+    playerPositiveGroup.add(player);
+
+
     //console.log(player.animations);
 
     cursors = game.input.keyboard.createCursorKeys();
@@ -106,8 +118,8 @@ function create() {
 function update() {
 
     //  Collide the player and the stars with the platforms
-    var hitPlatform = game.physics.arcade.collide(player, platforms);
-    var hitChargeTiles = game.physics.arcade.collide(player, groundlayer);
+    //var hitPlatform = game.physics.arcade.collide(player, platforms);
+    var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
 
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
