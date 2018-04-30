@@ -29,9 +29,17 @@ var bglayer;
 var wallslayer;
 
 var players = [];
+var p;
 
-function createPlayer(player) {
+function createPlayer(player, group) {
     game.physics.arcade.enable(player);
+
+    // Custom attributes
+    player.playerDirection = playerDirection;
+    player.playerJumpSensitivity = playerJumpSensitivity;
+    player.playerMoveSpeed = playerMoveSpeed;
+    player.playerJumpSpeed = playerJumpSpeed;
+    player.playerJumping = playerJumping;
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.body.bounce.y = 0.2;
@@ -53,7 +61,7 @@ function createPlayer(player) {
     player.animations.add('weld_left', [32, 33, 34, 35, 36, 37, 38, 39, 40], 10, true);
     player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
 
-    playerPositiveGroup.add(player);
+    group.add(player);
 }
 
 function create() {
@@ -64,18 +72,9 @@ function create() {
     // other objects, etc
    map = game.add.tilemap('map'); // step 1
    map.addTilesetImage('ChargeTiles', 'ChargeTiles'); // step 2
-
    groundlayer = map.createLayer('Ground');
 
    map.setCollision([2,3,4,5,6,7,8,10,11,12,13,14,15], true, groundlayer);
-   // step 3
-   //this.bgLayer = this.level1.createLayer('Background');
-   //this.wallsLayer = this.level1.createLayer('Walls');
-
-    //  A simple background for our game
-
-
-
 
     //  The platforms group contains the ground and the 2 ledges we can jump on
     //platforms = game.add.group();
@@ -101,14 +100,17 @@ function create() {
 
     //ledge.body.immovable = true;
     playerPositiveGroup = game.add.group();
-
     for (var i = 0; i < 3; i++) {
         // The player and its settings
-        player = game.add.sprite(32 * i, game.world.height - 150, 'battery');
-        //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
-        //  We need to enable physics on the player
-        createPlayer(player);
+        p = game.add.sprite(32 * i, game.world.height - 150, 'battery');
+        configurePlayer(p, playerPositiveGroup); // Default settings + group
+    }
 
+    playerNegativeGroup = game.add.group();
+    for (var i = 0; i < 3; i++) {
+        // The player and its settings
+        p = game.add.sprite(-32 * i, game.world.height - 150, 'battery-neg');
+        configurePlayer(p, playerNegativeGroup); // Default settings + group
     }
 
     //console.log(player.animations);
