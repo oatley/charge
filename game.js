@@ -10,6 +10,8 @@ function preload() {
     console.log(game.load.spritesheet);
 }
 
+// Deploy
+
 var playerDirection = 'left';
 
 function create() {
