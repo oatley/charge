@@ -13,10 +13,10 @@ function preload() {
 var playerDirection = 'left';
 var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
-var playerJumpSpeed = -200; // Negative number
-var playerJumpSpeedMod = -5;
+var playerJumpSpeed = -100; // Negative number
+var playerJumpSpeedMod = -10;
 var playerJumping = false;
-var playerJumpMaxHeight = -600;
+var playerJumpMaxHeight = -400;
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
