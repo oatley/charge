@@ -148,6 +148,7 @@ function update() {
             playerJumping = false;
         }
     } else if (!cursors.up.isDown) {
+        player.body.velocity.y = 0;
         playerJumping = false;
     } else if (cursors.up.isDown && player.body.touching.down) {
         player.body.velocity.y = playerJumpSpeed;
