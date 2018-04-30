@@ -11,6 +11,9 @@ function preload() {
 }
 
 var playerDirection = 'left';
+var playerJumpSensitivity = -5;
+var playerMoveSpeed = 250;
+var playerJumpSpeed = -600; // Negative number
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
@@ -87,10 +90,10 @@ function update() {
 
     if (cursors.left.isDown) {
         //  Move to the right
-        player.body.velocity.x = -250;
+        player.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
-        if (player.body.velocity.y < -3 || !player.body.touching.down) {
-            if (player.body.velocity.y < -3) {
+        if (player.body.velocity.y < -playerJumpSensitivity || !player.body.touching.down) {
+            if (player.body.velocity.y < -playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else {
                 player.animations.play('fall_left');
@@ -101,10 +104,10 @@ function update() {
     }
     else if (cursors.right.isDown) {
         //  Move to the right
-        player.body.velocity.x = 250;
+        player.body.velocity.x = playerMoveSpeed;
         playerDirection = 'right';
-        if (player.body.velocity.y < -3 || !player.body.touching.down) {
-            if (player.body.velocity.y < -3) {
+        if (player.body.velocity.y < -playerJumpSensitivity || !player.body.touching.down) {
+            if (player.body.velocity.y < -playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else {
                 player.animations.play('fall_right');
@@ -117,7 +120,7 @@ function update() {
     else
     {
         if (playerDirection == 'left') {
-            if (player.body.velocity.y < -3) {
+            if (player.body.velocity.y < -playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_left');
@@ -125,7 +128,7 @@ function update() {
                 player.animations.play('idle_left');
             }
         } else if (playerDirection == 'right') {
-            if (player.body.velocity.y < -3) {
+            if (player.body.velocity.y < -playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_right');
@@ -138,6 +141,6 @@ function update() {
     //  Allow the player to jump if they are touching the ground.
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.body.velocity.y = -600;
+        player.body.velocity.y = playerJumpSpeed;
     }
 }
