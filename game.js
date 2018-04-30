@@ -126,7 +126,7 @@ function update() {
 
     if (cursors.left.isDown) {
         //  Move to the right
-        player.body.velocity.x = -playerMoveSpeed;
+        playerPositiveGroup.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
         if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
