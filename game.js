@@ -7,7 +7,7 @@ function preload() {
     game.load.spritesheet('battery', 'assets/sprites/characters/battery-spritesheet.png', 64, 64);
     //game.load.spritesheet('bboy_walkL', 'assets/sprites/characters/bboy_walkL.png', 64, 64);
     //game.load.spritesheet('bboy_idleL', 'assets/sprites/characters/bboy_idleL.png', 64, 64);
-    console.log(game.load.spritesheet);
+    //console.log(game.load.spritesheet);
 }
 
 var playerDirection = 'left';
@@ -69,15 +69,16 @@ function create() {
 
     //console.log(player.animations);
 
-    //  Collide the player and the stars with the platforms
-    game.physics.arcade.collide(player, platforms);
-
     cursors = game.input.keyboard.createCursorKeys();
 
     console.log(player.body);
 }
 
 function update() {
+
+    //  Collide the player and the stars with the platforms
+    var hitPlatform = game.physics.arcade.collide(player, platforms);
+
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
 
