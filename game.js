@@ -122,11 +122,13 @@ function update() {
     player.body.velocity.x = 0;
     //console.log(player.body.velocity.y);
 
+    playerPositiveGroup.callAll('animations', 'play', 'idle_left');
+
     //console.log(player.body.touching.down, player.body.blocked.down);
 
     if (cursors.left.isDown) {
         //  Move to the right
-        playerPositiveGroup.body.velocity.x = -playerMoveSpeed;
+        player.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
         if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
             if (player.body.velocity.y < playerJumpSensitivity) {
