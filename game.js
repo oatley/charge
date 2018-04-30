@@ -16,7 +16,7 @@ var playerMoveSpeed = 250;
 var playerJumpSpeed = -100; // Negative number
 var playerJumpSpeedMod = -20;
 var playerJumping = false;
-var playerJumpMaxHeight = -400;
+var playerJumpMaxHeight = -500;
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
