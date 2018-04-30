@@ -31,6 +31,16 @@ var wallslayer;
 var players = [];
 var p;
 
+var upPositiveButton;
+var downPositiveButton;
+var leftPositiveButton;
+var rightPositiveButton;
+
+var upNegativeButton;
+var downNegativeButton;
+var leftNegativeButton;
+var rightNegativeButton;
+
 function configurePlayer(player, group) {
     game.physics.arcade.enable(player);
 
@@ -64,6 +74,21 @@ function configurePlayer(player, group) {
     group.add(player);
 }
 
+function configureNegativePlayerControls() {
+    upPositiveButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
+    downPositiveButton = game.input.keyboard.addKey(Phaser.Keyboard.S);
+    leftPositiveButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
+    rightPositiveButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
+}
+
+function configurePositivePlayerControls() {
+    upNegativeButton = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+    downNegativeButton = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+    leftNegativeButton = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+    rightNegativeButton = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+}
+
+
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -75,28 +100,6 @@ function create() {
    groundlayer = map.createLayer('Ground');
 
    map.setCollision([2,3,4,5,6,7,8,10,11,12,13,14,15], true, groundlayer);
-
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    //platforms = game.add.group();
-
-    //  We will enable physics for any object that is created in this group
-    //platforms.enableBody = true;
-
-    // Here we create the ground.
-    //var ground = platforms.create(0, game.world.height - 64, 'ground');
-
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    //ground.scale.setTo(2, 2);
-
-    //  This stops it from falling away when you jump on it
-    //ground.body.immovable = true;
-
-    //  Now let's create two ledges
-    //var ledge = platforms.create(400, 400, 'ground');
-
-    //ledge.body.immovable = true;
-
-    //ledge = platforms.create(-150, 250, 'ground');
 
     //ledge.body.immovable = true;
     playerPositiveGroup = game.add.group();
@@ -120,11 +123,23 @@ function create() {
     console.log(player.body);
 }
 
-function runAnim(player) {
+function runAnim(player, controls) {
+
+    if (controls == 'positive') {
+        var upButton = upPositiveButton;
+        var downButton = downPositiveButton;
+        var leftButton = leftPositiveButton;
+        var rightButton = rightPositiveButton;
+    } else {
+        var upButton = upNegativeButton;
+        var downButton = downNegativeButton;
+        var leftButton = leftNegativeButton;
+        var rightButton = rightNegativeButton;
+    }
     //  Reset the players velocity (movement)
     player.body.velocity.x = 0;
 
-    if (cursors.left.isDown) {
+    if (leftButton.isDown) {
         //  Move to the right
         player.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
@@ -188,13 +203,14 @@ function update() {
     //  Collide the player and the stars with the platforms
     //var hitPlatform = game.physics.arcade.collide(player, platforms);
     var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
+    var hitChargeTiles2 = game.physics.arcade.collide(playerNegativeGroup, groundlayer);
     playerNegativeGroup.forEach(function(player) {
-        runAnim(player);
+        runAnim(player, 'negative');
 
     }, this);
 
     playerPositiveGroup.forEach(function(player) {
-        runAnim(player);
+        runAnim(player, 'positive');
 
     }, this);
 }
