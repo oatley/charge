@@ -188,7 +188,10 @@ function update() {
     //  Collide the player and the stars with the platforms
     //var hitPlatform = game.physics.arcade.collide(player, platforms);
     var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
+    playerNegativeGroup.forEach(function(player) {
+        runAnim(player);
 
+    }, this);
 
     playerPositiveGroup.forEach(function(player) {
         runAnim(player);
