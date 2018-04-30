@@ -11,7 +11,7 @@ function preload() {
 }
 
 var playerDirection = 'left';
-var playerJumpSensitivity = -5;
+var playerJumpSensitivity = -5; // Negative number, default is about -2.8 falling always
 var playerMoveSpeed = 250;
 var playerJumpSpeed = -600; // Negative number
 
@@ -92,8 +92,8 @@ function update() {
         //  Move to the right
         player.body.velocity.x = -playerMoveSpeed;
         playerDirection = 'left';
-        if (player.body.velocity.y < -playerJumpSensitivity || !player.body.touching.down) {
-            if (player.body.velocity.y < -playerJumpSensitivity) {
+        if (player.body.velocity.y < playerJumpSensitivity || !player.body.touching.down) {
+            if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else {
                 player.animations.play('fall_left');
@@ -106,8 +106,8 @@ function update() {
         //  Move to the right
         player.body.velocity.x = playerMoveSpeed;
         playerDirection = 'right';
-        if (player.body.velocity.y < -playerJumpSensitivity || !player.body.touching.down) {
-            if (player.body.velocity.y < -playerJumpSensitivity) {
+        if (player.body.velocity.y < playerJumpSensitivity || !player.body.touching.down) {
+            if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else {
                 player.animations.play('fall_right');
@@ -120,7 +120,7 @@ function update() {
     else
     {
         if (playerDirection == 'left') {
-            if (player.body.velocity.y < -playerJumpSensitivity) {
+            if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_left');
@@ -128,7 +128,7 @@ function update() {
                 player.animations.play('idle_left');
             }
         } else if (playerDirection == 'right') {
-            if (player.body.velocity.y < -playerJumpSensitivity) {
+            if (player.body.velocity.y < playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else if (!player.body.touching.down) {
                 player.animations.play('fall_right');
