@@ -1,319 +1,113 @@
-var config = {
-    type: Phaser.AUTO,
-    width: 800,
-    height: 600,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 1000 },
-            debug: false
-        }
-    },
-    scene: {
-        preload: preload,
-        create: create,
-        update: update
-    }
-};
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
-var game = new Phaser.Game(config);
-var map;
-var layer;
-var platforms;
-var player;
-var score = 0;
-var scoreText;
-//var bomb;
-var playerDirection = 'right';
-var playerJumpForce = -630;
-
-var allPlayers = [];
-
-
-function preload () {
-
-    // Charge assets
-    /*this.load.image('bboy_pos_default', 'assets/bboy_default.png');
-    this.load.image('bboy_neg_default', 'assets/bboy_neg_default.png');
-    /this.load.spritesheet('bboy_walk',
-        'assets/bboy_walk.png',
-        { frameWidth: 64, frameHeight: 64 }
-    );*/
-    //this.load.image('bboy_jump_right', 'assets/bboy_jumpR.png');
-    //this.load.image('bboy_jump_left', 'assets/bboy_jumpL.png');
-    this.load.spritesheet('bboy_walk_right', 'assets/sprites/characters/bboy_walkR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_walk_left', 'assets/sprites/characters/bboy_walkL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_idle_right', 'assets/sprites/characters/bboy_idleR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_idle_left', 'assets/sprites/characters/bboy_idleL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_jump_right', 'assets/sprites/characters/bboy_jumpR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_jump_left', 'assets/sprites/characters/bboy_jumpL.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_fall_right', 'assets/sprites/characters/bboy_fallR.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('bboy_fall_left', 'assets/sprites/characters/bboy_fallL.png', { frameWidth: 64, frameHeight: 64 });
-    // Tutorial assets
-    this.load.image('sky', 'assets/sprites/characters/sky.png');
-    //this.load.image('ground', 'assets/sprites/characters/platform.png');
-    //this.load.image('star', 'assets/sprites/characters/star.png');
-    //this.load.image('bomb', 'assets/sprites/characters/bomb.png');
-    /*this.load.spritesheet('dude',
-        'tutorial/assets/dude.png',
-        { frameWidth: 32, frameHeight: 48 }
-    );*/
-    //game.load.tilemap('level1', 'assets/tilemaps/maps/ChargeTilesMap.json', null, Phaser.Tilemap.TILED_JSON);
-    //game.load.image('tiles', 'assets/tilemaps/tiles/super_mario.png');
-    //game.load.image('player', 'assets/sprites/phaser-dude.png');
-
-    //this.load.tilemapTiledJSON('map', 'assets/tilemaps/maps/ChargeTilesMap.json');
-    //this.load.tilemapJSON('map', 'assets/tilemaps/maps/ChargeTilesMap.json');
-    //this.load.spritesheet('tiles','assets/sprites/tiles/ChargeTiles.png', {frameWidth: 64, frameHeight: 64} );
-
-    this.load.tilemapTiledJSON('map', 'assets/tilemaps/maps/ChargeTilesMap.json');
-    this.load.image('ChargeTiles', 'assets/sprites/tiles/ChargeTiles.png');
-
-
-    //this.load.tilemapTiledJSON('map', 'assets/tilemaps/maps/cybernoid.json');
-    //this.load.image('cybernoid', 'cybernoid.png');
-
-
-
+function preload() {
+    game.load.image('sky', 'assets/sprites/characters/sky.png');
+    game.load.image('ground', 'assets/sprites/characters/platform.png');
+    game.load.image('star', 'assets/sprites/characters/star.png');
+    game.load.spritesheet('battery', 'assets/sprites/characters/battery-spritesheet.png', 64, 64);
+    //game.load.spritesheet('bboy_walkL', 'assets/sprites/characters/bboy_walkL.png', 64, 64);
+    //game.load.spritesheet('bboy_idleL', 'assets/sprites/characters/bboy_idleL.png', 64, 64);
+    console.log(game.load.spritesheet);
 }
 
+var playerDirection = 'left';
 
-function create () {
-    // Background
-    this.add.image(400, 300, 'sky');
-    //map = game.add.tilemap('map');
-    //map = this.make.tilemap({ key: 'map' });
+function create() {
+    //  We're going to be using physics, so enable the Arcade Physics system
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    map = this.add.tilemap('map');
-    console.log(map);
-    //map.addTilesetImage('ChargeTiles', 'tiles');
-    var tiles = map.addTilesetImage('ChargeTiles'); // 'assets/sprites/tiles/ChargeTiles.png');
-    console.log(tiles);
-    //this.map.createStaticLayer(0, tiles).resizeWorld();
-    var layer = map.createDynamicLayer(0, tiles, 0, 0);
+    //  A simple background for our game
+    game.add.sprite(0, 0, 'sky');
 
-    console.log(layer);
-    layer.setScale(1,1);
+    //  The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = game.add.group();
 
-    map.setCollision([2,3,4,5,6,7,8,10,11,12,13,14,15]);
+    //  We will enable physics for any object that is created in this group
+    platforms.enableBody = true;
 
-    //this.groundLayer = map.createStaticLayer('Ground', tiles, 0, 0);
-    //var Layer = map.createStaticLayer('Ground', tiles);
-    //layer = map.createStaticLayer(0, 'Ground', 0, 0);
-    //layer.resizeWorld();
-    console.log ('done');
-    //map = this.make.tilemap({ key: 'map' });
-    //this.map = this.add.tilemap('map');
-    //var tiles = map.addTilesetImage('ChargeTiles', 'tiles');
-    //this.backgroundLayer = this.map.createStaticLayer('Ground', tiles);
-    //var layer = map.createStaticLayer(0, tiles, 0, 0);
+    // Here we create the ground.
+    var ground = platforms.create(0, game.world.height - 64, 'ground');
 
-    //console.log(map);
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    ground.scale.setTo(2, 2);
 
-    //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    //  This stops it from falling away when you jump on it
+    ground.body.immovable = true;
 
-    // Platforms
-    //platforms = this.physics.add.staticGroup();
-    //platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-    //platforms.create(600, 400, 'ground');
-    //platforms.create(50, 250, 'ground');
-    //platforms.create(750, 240, 'ground');
+    //  Now let's create two ledges
+    var ledge = platforms.create(400, 400, 'ground');
 
-    /*for (var i = 1; i <= 5; i++) {
-        // Player
-        player = this.physics.add.sprite(100*i, 450, 'bboy_pos_default');
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
-        console.log(player);
-        player.body.height = 60;
-        player.body.width = 40;
-        allPlayers.push(player);
-    }*/
+    ledge.body.immovable = true;
 
-    player = this.physics.add.sprite(100, 250, 'bboy_pos_default');
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-    player.body.setSize(64,64, false);
-    player.body.halfHeight = 64;
-    player.body.halfWidth = 64;
-    player.body.sourceHeight = 64;
-    player.body.sourceWidth = 64;
-    player.body.updateCenter();
-    console.log(player.body.setSize);
+    ledge = platforms.create(-150, 250, 'ground');
 
-    /*player.body.height = 60;
-    player.body.halfHeight = 30;
-    player.body.width = 40;
-    player.body.halfWidth = 20;
-    player.body.halfHeight = 64;
-    player.body.halfWidth = 16;
-    player.body.sourceHeight = 64;
-    player.body.sourceWidth = 16;
-    player.setOrigin(20,30);*/
-    console.log(player);
-    //console.log('local player bounds', player.getBounds());
-    //player.Physics.Body.width = 32;
-    //console.log('local player bounds', player.getBounds());
-    // Bombs
-    //bombs = this.physics.add.group();
+    ledge.body.immovable = true;
 
-    // Animations
-    this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('bboy_walk_left', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-    this.anims.create({
-        key: 'turn',
-        frames: [ { key: 'bboy_walk', frame: 0 } ],
-        frameRate: 20
-    });
-    this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('bboy_walk_right', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-    this.anims.create({
-        key: 'left_idle',
-        frames: this.anims.generateFrameNumbers('bboy_idle_left', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-    this.anims.create({
-        key: 'right_idle',
-        frames: this.anims.generateFrameNumbers('bboy_idle_right', { start: 0, end: 6 }),
-        frameRate: 10,
-        repeat: -1
-    });
-    this.anims.create({
-        key: 'left_jump',
-        frames: [ { key: 'bboy_jump_left', frame: 0 } ],
-        frameRate: 20,
-    });
-    this.anims.create({
-        key: 'right_jump',
-        frames: [ { key: 'bboy_jump_right', frame: 0 } ],
-        frameRate: 20,
-    });
-    this.anims.create({
-        key: 'left_fall',
-        frames: [ { key: 'bboy_fall_left', frame: 0 } ],
-        frameRate: 20,
-    });
-    this.anims.create({
-        key: 'right_fall',
-        frames: [ { key: 'bboy_fall_right', frame: 0 } ],
-        frameRate: 20,
-    });
+    // The player and its settings
+    player = game.add.sprite(32, game.world.height - 150, 'battery');
+    //player = game.add.sprite(32, game.world.height - 150, 'bboy_walkL');
 
+    //  We need to enable physics on the player
+    game.physics.arcade.enable(player);
 
-    // Star objects
-    /*stars = this.physics.add.group({
-        key: 'star',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
-    });*/
+    //  Player physics properties. Give the little guy a slight bounce.
+    player.body.bounce.y = 0.2;
+    player.body.gravity.y = 300;
+    player.body.collideWorldBounds = true;
 
-    /*stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    });
+    //  Our two animations, walking left and right.
+    player.animations.add('idle_left', [0, 1, 2, 3, 4, 5, 6], 10, true);
+    player.animations.add('idle_right', [7, 8, 9, 10, 11, 12, 13], 10, true);
+    player.animations.add('fall_left', [14], 10, true);
+    player.animations.add('fall_right', [15], 10, true);
+    player.animations.add('walk_left', [16, 17, 18, 19, 20, 21], 10, true);
+    player.animations.add('walk_right', [22, 23, 24, 25, 26, 27, ], 10, true);
+    player.animations.add('jump_left', [28], 10, true);
+    player.animations.add('jump_right', [29], 10, true);
+    player.animations.add('weld_left', [32, 33, 34, 35, 36, 37, 38, 39, 40], 10, true);
+    player.animations.add('weld_right', [48, 49, 50, 51, 52, 53, 54, 55, 56], 10, true);
 
-    // Add colliders
-    this.physics.add.collider(player, platforms);
-    this.physics.add.collider(stars, platforms);
-    this.physics.add.overlap(player, stars, collectStar, null, this);
-    this.physics.add.collider(bombs, platforms);
-    this.physics.add.collider(player, bombs, hitBomb, null, this);
-    */
-    /*
-    for (var object in layer.culledTiles) {
-        this.physics.add.collider(player, object);
-    }
-        this.physics.add.collider(player, layer);
-            this.physics.add.collider(player, layer.culledTiles);
-                this.physics.add.collider(player, 'Ground');
-    console.log(layer.culledTiles);
-*/
-    this.physics.add.collider(player, layer);
-    // Enable keyboard bindings
-    cursors = this.input.keyboard.createCursorKeys();
+    //console.log(player.animations);
 
-    // Add text information
-    scoreText = this.add.text(16, 16, 'score: 0' , { fontSize: '32px', fill: '#000' });
+    //  Collide the player and the stars with the platforms
+    game.physics.arcade.collide(player, platforms);
 
+    cursors = game.input.keyboard.createCursorKeys();
+
+    console.log(player.body);
 }
 
+function update() {
+    //  Reset the players velocity (movement)
+    player.body.velocity.x = 0;
 
 
-// Load level
-function loadLevel1() {
-    var level = 'assets/levels/ChargeTilesMap.json'
-}
-
-// Function to run on star player collision
-function collectStar (player, star)
-{
-    star.disableBody(true, true);
-
-    score += 10;
-    scoreText.setText('Score: ' + score);
-}
-
-// Function to run on bomb player collision
-function hitBomb (player, bomb) {
-    this.physics.pause();
-    player.setTint(0xff0000);
-    player.anims.play('turn');
-    gameOver = true;
-}
-
-// Update function controls keyboard input
-function update () {
-
-    if (cursors.left.isDown) {
-        player.setVelocityX(-160);
-        if (player.body.velocity.y > 0) {
-            player.anims.play('left_fall', true);
-        } else if (cursors.up.isDown) {
-            player.anims.play('left_jump', true);
-        } else {
-            player.anims.play('left', true);
-        }
+    if (cursors.left.isDown)
+    {
+        //  Move to the left
+        player.body.velocity.x = -150;
+        player.animations.play('walk_left');
         playerDirection = 'left';
-    } else if (cursors.right.isDown) {
-        player.setVelocityX(160);
-        if (player.body.velocity.y > 0) {
-            player.anims.play('right_fall', true);
-        } else if (cursors.up.isDown) {
-            player.anims.play('right_jump', true);
-        } else {
-            player.anims.play('right', true);
-        }
+    }
+    else if (cursors.right.isDown)
+    {
+        //  Move to the right
+        player.body.velocity.x = 150;
+        player.animations.play('walk_right');
         playerDirection = 'right';
-    } else {
-        player.setVelocityX(0);
-        //console.log(player.body.velocity.y);
-        if (playerDirection == 'right' && player.body.velocity.y > 0) {
-            player.anims.play('right_fall', true);
-        } else if (playerDirection == 'left' && player.body.velocity.y > 0) {
-            player.anims.play('right_fall', true);
-        } else if (playerDirection == 'right' && player.body.velocity.y < -3) {
-            player.anims.play('right_jump', true);
-        } else if (playerDirection == 'left' && player.body.velocity.y < -3) {
-            player.anims.play('right_jump', true);
-        } else {
-            if (playerDirection == 'right') {
-                player.anims.play('right_idle', true);
-            } else if (playerDirection == 'left') {
-                player.anims.play('left_idle', true);
-            }
+    }
+    else
+    {
+        if (playerDirection == 'left') {
+            player.animations.play('idle_left');
+        } else if (playerDirection == 'right') {
+            player.animations.play('idle_right');
         }
     }
 
-    if (cursors.up.isDown && player.body.blocked.down) {
-        player.setVelocityY(playerJumpForce);
+    //  Allow the player to jump if they are touching the ground.
+    if (cursors.up.isDown && player.body.touching.down)
+    {
+        player.body.velocity.y = -350;
     }
-
 }
