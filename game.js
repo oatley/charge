@@ -118,12 +118,16 @@ function update() {
     {
         if (playerDirection == 'left') {
             if (player.body.velocity.y < -3 || !player.body.touching.down) {
+                player.animations.play('jump_left');
+            } else if (!player.body.touching.down) {
                 player.animations.play('fall_left');
             } else {
                 player.animations.play('idle_left');
             }
         } else if (playerDirection == 'right') {
             if (player.body.velocity.y < -3 || !player.body.touching.down) {
+                player.animations.play('jump_right');
+            } else if (!player.body.touching.down) {
                 player.animations.play('fall_right');
             } else {
                 player.animations.play('idle_right');
