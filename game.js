@@ -108,7 +108,7 @@ function create() {
     playerPositiveGroup = game.add.group();
     for (var i = 0; i < 3; i++) {
         // The player and its settings
-        p = game.add.sprite(32 * i, game.world.height - 150, 'battery');
+        p = game.add.sprite(128 * i, game.world.height - 150, 'battery');
         configurePlayer(p, playerPositiveGroup); // Default settings + group
     }
 
