@@ -119,11 +119,8 @@ function create() {
         configurePlayer(p, playerNegativeGroup); // Default settings + group
     }
 
-    //console.log(player.animations);
-
     cursors = game.input.keyboard.createCursorKeys();
 
-    console.log(player.body);
 }
 
 function runAnim(player, controls) {
