@@ -144,10 +144,10 @@ function runAnim(player, controls) {
 
     if (leftButton.isDown) {
         //  Move to the right
-        player.body.velocity.x = -playerMoveSpeed;
-        playerDirection = 'left';
-        if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
-            if (player.body.velocity.y < playerJumpSensitivity) {
+        player.body.velocity.x = -player.playerMoveSpeed;
+        player.playerDirection = 'left';
+        if (player.body.velocity.y < player.playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
+            if (player.body.velocity.y < player.playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else {
                 player.animations.play('fall_left');
@@ -158,10 +158,10 @@ function runAnim(player, controls) {
     }
     else if (rightButton.isDown) {
         //  Move to the right
-        player.body.velocity.x = playerMoveSpeed;
-        playerDirection = 'right';
-        if (player.body.velocity.y < playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
-            if (player.body.velocity.y < playerJumpSensitivity) {
+        player.body.velocity.x = player.playerMoveSpeed;
+        player.playerDirection = 'right';
+        if (player.body.velocity.y < player.playerJumpSensitivity || !(player.body.touching.down || player.body.blocked.down)) {
+            if (player.body.velocity.y < player.playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else {
                 player.animations.play('fall_right');
@@ -172,16 +172,16 @@ function runAnim(player, controls) {
         }
     }
     else {
-        if (playerDirection == 'left') {
-            if (player.body.velocity.y < playerJumpSensitivity) {
+        if (player.playerDirection == 'left') {
+            if (player.body.velocity.y < player.playerJumpSensitivity) {
                 player.animations.play('jump_left');
             } else if (!(player.body.touching.down || player.body.blocked.down)) {
                 player.animations.play('fall_left');
             } else {
                 player.animations.play('idle_left');
             }
-        } else if (playerDirection == 'right') {
-            if (player.body.velocity.y < playerJumpSensitivity) {
+        } else if (player.playerDirection == 'right') {
+            if (player.body.velocity.y < player.playerJumpSensitivity) {
                 player.animations.play('jump_right');
             } else if (!(player.body.touching.down || player.body.blocked.down)) {
                 player.animations.play('fall_right');
@@ -192,12 +192,12 @@ function runAnim(player, controls) {
     }
 
     //  Allow the player to jump if they are touching the ground.
-    if (!upButton.isDown && playerJumping && player.body.velocity.y < 0) {
+    if (!upButton.isDown && player.playerJumping && player.body.velocity.y < 0) {
         player.body.velocity.y = player.body.velocity.y * 0.5;
-        playerJumping = false;
+        player.playerJumping = false;
     } else if (upButton.isDown && (player.body.touching.down || player.body.blocked.down)) {
-        player.body.velocity.y = playerJumpSpeed;
-        playerJumping = true;
+        player.body.velocity.y = player.playerJumpSpeed;
+        player.playerJumping = true;
     }
 }
 
