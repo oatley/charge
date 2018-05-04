@@ -56,7 +56,7 @@ function configurePlayer(player, group) {
     player.body.gravity.y = 1000;
     player.body.collideWorldBounds = true;
     player.body.setSize(32, 60, 16, 0);
-    player.body.checkCollision.up = false;
+    player.body.checkCollision.up = true;
 
 
     //  Our two animations, walking left and right.
