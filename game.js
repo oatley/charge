@@ -204,6 +204,9 @@ function update() {
     //var hitPlatform = game.physics.arcade.collide(player, platforms);
     var hitChargeTiles = game.physics.arcade.collide(playerPositiveGroup, groundlayer);
     var hitChargeTiles2 = game.physics.arcade.collide(playerNegativeGroup, groundlayer);
+    var hitPlayer = game.physics.arcade.collide(playerPositiveGroup, playerNegativeGroup);
+    var hitPlayer2 = game.physics.arcade.collide(playerPositiveGroup, playerPositiveGroup);
+    var hitPlayer3 = game.physics.arcade.collide(playerNegativeGroup, playerNegativeGroup);
     playerNegativeGroup.forEach(function(player) {
         runAnim(player, 'negative');
 
